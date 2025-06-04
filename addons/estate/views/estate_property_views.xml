@@ -27,6 +27,16 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Properties">
+                <header>
+                    <button name="action_sell"
+                            type="object"
+                            string="Sold"
+                            class="btn-primary"/>
+                    <button name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
                     <h1>
                         <field name="name"/>
@@ -34,12 +44,14 @@
                     <field name="tag_ids" widget="many2many_tags" options="{'no_create': True}"/>
                     <group>
                         <group>
+                            <field name="state"/>
                             <field name="property_type_id"/>
                             <field name="postcode"/>
                             <field name="date_availability"/>
                         </group>
                         <group>
                             <field name="expected_price"/>
+                            <field name="best_price"/>
                             <field name="selling_price"/>
                         </group>
                     </group>
@@ -54,6 +66,7 @@
                                 <field name="garden"/>
                                 <field name="garden_area"/>
                                 <field name="garden_orientation"/>
+                                <field name="total_area"/>
                             </group>
                         </page>
                         <page string="Offers">
@@ -61,7 +74,17 @@
                                 <tree string="Offers">
                                     <field name="price"/>
                                     <field name="partner_id"/>
+                                    <field name="validity"/>
+                                    <field name="date_deadline"/>
                                     <field name="status"/>
+                                    <button name="action_accept_offer"
+                                        type="object"
+                                        icon="fa-check"
+                                        class="btn-primary"/>
+                                    <button name="action_refuse_offer"
+                                        type="object"
+                                        icon="fa-times"
+                                        class="btn-primary"/>
                                 </tree>
                             </field>
                         </page>
