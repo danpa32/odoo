@@ -8,6 +8,7 @@ from odoo.exceptions import UserError
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = "Real estate property description"
+    _order = "id desc"
 
     # -------------------------------------------------------------------------
     #
@@ -106,6 +107,11 @@ class EstateProperty(models.Model):
         else:
             self.garden_area = 0
             self.garden_orientation = False
+
+    @api.onchange("offer_ids")
+    def _compute_state_on_offer(self):
+        if self.state == 'new' and self.offer_ids:
+            self.state = 'offer_received'
 
     # -------------------------------------------------------------------------
     # User Interface Actions

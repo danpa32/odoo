@@ -8,6 +8,7 @@ from odoo import models, fields, api
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = "Real estate property offer description"
+    _order = "price desc"
 
     price = fields.Float()
     status = fields.Selection(
@@ -15,7 +16,7 @@ class EstatePropertyOffer(models.Model):
             ('accepted', 'Accepted'),
             ('refused', 'Refused'),
         ],
-        default='accepted',
+        default=False,
         string="Status",
     )
     partner_id = fields.Many2one("res.partner", string="Partner", required=True, ondelete='cascade')
@@ -25,6 +26,7 @@ class EstatePropertyOffer(models.Model):
         default=7,
         help="Number of days the offer is valid, default is 7 days.",
     )
+    property_type_id = fields.Many2one(related='property_id.property_type_id', string="Property Type", store=True, readonly=True)
 
     # -------------------------------------------------------------------------
     # SQL Constraints

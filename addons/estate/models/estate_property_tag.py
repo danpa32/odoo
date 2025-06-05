@@ -6,8 +6,10 @@ from odoo import models, fields
 class EstatePropertyTag(models.Model):
     _name = 'estate.property.tag'
     _description = "Real estate property tag description"
+    _order = "name asc"
 
     name = fields.Char(string="Name", required=True)
+    color = fields.Integer(string="Color")
 
     # -------------------------------------------------------------------------
     # SQL Constraints

@@ -7,10 +7,29 @@
         <field name="model">estate.property.types</field>
         <field name="arch" type="xml">
             <form string="Property Types">
+                <header>
+                    <button name="%(action_estate_property_offer)d"
+                            type="action"
+                            string="Offers"
+                            icon="fa-list"
+                            attrs="{'invisible': [('offer_count', '=', 0)]}"/>
+                    <field name="offer_count" widget="statinfo" string="Offers"/>
+                </header>
                 <sheet>
                     <h1>
                         <field name="name"/>
                     </h1>
+                    <notebook>
+                        <page string="Properties">
+                            <field name="property_ids">
+                                <tree>
+                                    <field name="name" string="Title"/>
+                                    <field name="expected_price"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -22,6 +41,7 @@
         <field name="model">estate.property.types</field>
         <field name="arch" type="xml">
             <tree string="Property Types">
+                <field name="sequence" widget="handle"/>
                 <field name="name" string="Title"/>
             </tree>
         </field>
