@@ -50,6 +50,16 @@ class EstateProperty(models.Model):
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
 
     # -------------------------------------------------------------------------
+    # Override Methods
+    # -------------------------------------------------------------------------
+    """ Prevent deletion of a property if its state is not 'New' or 'Canceled' """
+    def unlink(self):
+        for record in self:
+            if record.state not in ['new', 'canceled']:
+                raise UserError("You cannot delete a property that is not new or canceled.")
+        return super(EstateProperty, self).unlink()
+
+    # -------------------------------------------------------------------------
     # SQL Constraints
     # -------------------------------------------------------------------------
     _sql_constraints = [

@@ -3,6 +3,7 @@ from datetime import timedelta
 from email.policy import default
 
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 
 class EstatePropertyOffer(models.Model):
@@ -27,6 +28,24 @@ class EstatePropertyOffer(models.Model):
         help="Number of days the offer is valid, default is 7 days.",
     )
     property_type_id = fields.Many2one(related='property_id.property_type_id', string="Property Type", store=True, readonly=True)
+
+    # -------------------------------------------------------------------------
+    # Override Methods
+    # -------------------------------------------------------------------------
+    """ 
+    At offer creation, set the property state to 'offer_received' if it is not already set. 
+    Raise an error if the user tries to create an offer with a lower price 
+    than an existing offer for the same property. """
+    @api.model
+    def create(self, vals):
+        if 'property_id' in vals:
+            property_id = self.env['estate.property'].browse(vals['property_id'])
+            if property_id.state != 'offer_received':
+                property_id.state = 'offer_received'
+            existing_offers = self.search([('property_id', '=', property_id.id), ('price', '>', vals.get('price', 0))])
+            if existing_offers:
+                raise UserError("You cannot create an offer with a lower price than an existing offer.")
+        return super(EstatePropertyOffer, self).create(vals)
 
     # -------------------------------------------------------------------------
     # SQL Constraints
