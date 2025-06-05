@@ -7,9 +7,7 @@
     'summary': 'The Real Estate Account module',
     'description': "",
     'website': 'http://localhost:8069',
-    'depends': [
-        'base',
-    ],
+    'depends': ['account', 'estate'],
     'data': [
         'security/ir.model.access.csv',
     ],

@@ -12,6 +12,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'data/estate_property_types_master_data.xml',
         'data/estate_property_tag_views.xml',
         'data/estate_property_types_views.xml',
         'data/estate_property_offer_views.xml',
@@ -24,6 +25,7 @@
         'views/res_users.xml',
     ],
     'demo': [
+        'data/estate_property_demo.xml',
     ],
     'css': [
         'static/src/css/crm.css',
